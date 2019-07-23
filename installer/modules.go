@@ -661,8 +661,11 @@ func (d *moduleDownload) downloadStream(r io.Reader, name string) error {
 
 // This function should be called even if downloadStream() returned errors.
 func (d *moduleDownload) finishDownloadProcess() error {
+	{ _, debugfunc, debugline, _ := runtime.Caller(0); fmt.Printf("In %s at %d\n", debugfunc, debugline) }
 	d.finishChannel <- true
+	{ _, debugfunc, debugline, _ := runtime.Caller(0); fmt.Printf("In %s at %d\n", debugfunc, debugline) }
 	err := <-d.status
+	{ _, debugfunc, debugline, _ := runtime.Caller(0); fmt.Printf("In %s at %d\n", debugfunc, debugline) }
 	return err
 }
 
@@ -746,8 +749,11 @@ func (mod *ModuleInstaller) FinishStoreUpdate() error {
 		return errors.New("Internal error: FinishStoreUpdate() called when download is inactive")
 	}
 
+	{ _, debugfunc, debugline, _ := runtime.Caller(0); fmt.Printf("In %s at %d\n", debugfunc, debugline) }
 	err := mod.downloader.finishDownloadProcess()
+	{ _, debugfunc, debugline, _ := runtime.Caller(0); fmt.Printf("In %s at %d\n", debugfunc, debugline) }
 	mod.processKiller.Stop()
+	{ _, debugfunc, debugline, _ := runtime.Caller(0); fmt.Printf("In %s at %d\n", debugfunc, debugline) }
 
 	mod.downloader = nil
 	mod.processKiller = nil
